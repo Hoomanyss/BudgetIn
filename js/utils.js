@@ -342,13 +342,15 @@ const BASE = isSubPage ? '../' : './';
  * @param {string} page  "dashboard" | "settlement" | "history" | "index"
  */
 function navigate(page) {
+  const [routeName, query] = page.split('?');
   const routes = {
     index:      BASE + 'index.html',
     dashboard:  BASE + 'pages/dashboard.html',
     settlement: BASE + 'pages/settlement.html',
     history:    BASE + 'pages/history.html',
   };
-  window.location.href = routes[page] || routes.index;
+  const target = routes[routeName] || routes.index;
+  window.location.href = target + (query ? '?' + query : '');
 }
 
 // ── DOM Helpers ───────────────────────────────────────
