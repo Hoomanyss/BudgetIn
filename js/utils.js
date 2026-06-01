@@ -77,19 +77,86 @@ function formatDate(isoString) {
 // ── LocalStorage Helpers ──────────────────────────────
 
 const LS_KEYS = {
-  SESSION:   'budgetin_session',   // current active shopping session
-  HISTORY:   'budgetin_history',   // array of completed sessions
+  SESSION:          'budgetin_session',          // legacy active session
+  HISTORY:          'budgetin_history',          // array of completed sessions
+  ACTIVE_SESSIONS:  'budgetin_active_sessions',  // array of all active sessions
+  CURRENT_ID:       'budgetin_current_id',       // ID of current active session
 };
+
+/**
+ * Get all active sessions
+ * @returns {Array}
+ */
+function getActiveSessions() {
+  try {
+    const raw = localStorage.getItem(LS_KEYS.ACTIVE_SESSIONS);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+/**
+ * Save all active sessions list
+ * @param {Array} sessions
+ */
+function saveActiveSessions(sessions) {
+  localStorage.setItem(LS_KEYS.ACTIVE_SESSIONS, JSON.stringify(sessions));
+}
+
+/**
+ * Get current active session ID
+ * @returns {number|null}
+ */
+function getCurrentSessionId() {
+  const id = localStorage.getItem(LS_KEYS.CURRENT_ID);
+  return id ? parseInt(id, 10) : null;
+}
+
+/**
+ * Set current active session ID
+ * @param {number} id
+ */
+function setCurrentSessionId(id) {
+  localStorage.setItem(LS_KEYS.CURRENT_ID, id.toString());
+}
 
 /**
  * Get current active session from storage
  * @returns {Object|null}
  */
 function getSession() {
-  try {
-    const raw = localStorage.getItem(LS_KEYS.SESSION);
-    return raw ? JSON.parse(raw) : null;
-  } catch { return null; }
+  const sessions = getActiveSessions();
+  
+  // Backward compatibility: check if there's an old single session
+  if (sessions.length === 0) {
+    try {
+      const legacyRaw = localStorage.getItem(LS_KEYS.SESSION);
+      if (legacyRaw) {
+        const legacySession = JSON.parse(legacyRaw);
+        if (legacySession && legacySession.budget > 0) {
+          legacySession.id = Date.now();
+          legacySession.name = 'Sesi Belanja';
+          const newSessions = [legacySession];
+          saveActiveSessions(newSessions);
+          setCurrentSessionId(legacySession.id);
+          localStorage.removeItem(LS_KEYS.SESSION); // Clean legacy key
+          return legacySession;
+        }
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  if (sessions.length === 0) return null;
+
+  const currentId = getCurrentSessionId();
+  if (currentId) {
+    const found = sessions.find(s => s.id === currentId);
+    if (found) return found;
+  }
+
+  // Fallback: select first active session
+  const fallback = sessions[0];
+  setCurrentSessionId(fallback.id);
+  return fallback;
 }
 
 /**
@@ -97,14 +164,43 @@ function getSession() {
  * @param {Object} session
  */
 function saveSession(session) {
-  localStorage.setItem(LS_KEYS.SESSION, JSON.stringify(session));
+  if (!session) return;
+  if (!session.id) {
+    session.id = Date.now();
+  }
+  if (!session.name) {
+    const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+    session.name = `Belanja ${dateStr}`;
+  }
+
+  const sessions = getActiveSessions();
+  const index = sessions.findIndex(s => s.id === session.id);
+  
+  if (index !== -1) {
+    sessions[index] = session;
+  } else {
+    sessions.push(session);
+  }
+
+  saveActiveSessions(sessions);
+  setCurrentSessionId(session.id);
 }
 
 /**
  * Clear the current active session
  */
 function clearSession() {
-  localStorage.removeItem(LS_KEYS.SESSION);
+  const currentId = getCurrentSessionId();
+  if (!currentId) return;
+
+  const sessions = getActiveSessions().filter(s => s.id !== currentId);
+  saveActiveSessions(sessions);
+
+  if (sessions.length > 0) {
+    setCurrentSessionId(sessions[0].id);
+  } else {
+    localStorage.removeItem(LS_KEYS.CURRENT_ID);
+  }
 }
 
 /**
@@ -147,13 +243,10 @@ function clearHistory() {
 
 // ── Session Factory ───────────────────────────────────
 
-/**
- * Create a new empty session object
- * @param {number} budget
- * @returns {Object}
- */
-function createSession(budget) {
+function createSession(budget, name = '') {
   return {
+    id: Date.now(),
+    name: name.trim(),
     budget: budget,
     items: [],
     createdAt: nowISO(),

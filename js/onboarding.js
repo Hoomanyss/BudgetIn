@@ -10,17 +10,29 @@ const budgetInput  = document.getElementById('budgetInput');
 const btnStart     = document.getElementById('btnStart');
 const inputHint    = document.getElementById('inputHint');
 const qaButtons    = document.querySelectorAll('.qa-btn');
+const sessionName  = document.getElementById('sessionName');
+const btnCancel    = document.getElementById('btnCancel');
 
 // ── State ─────────────────────────────────────────────
 let selectedBudget = 0;
+let isForcedNew    = false;
 
 // ── Init ──────────────────────────────────────────────
 function init() {
-  // If there's an active session already, redirect to dashboard
+  const urlParams = new URLSearchParams(window.location.search);
+  isForcedNew = urlParams.get('new') === 'true';
+
   const session = getSession();
-  if (session && session.budget > 0) {
+  
+  // If there's an active session already and we're not forcing a new one, redirect to dashboard
+  if (session && session.budget > 0 && !isForcedNew) {
     navigate('dashboard');
     return;
+  }
+
+  // Show cancel button if we have existing sessions and are forcing a new one
+  if (isForcedNew && session) {
+    btnCancel.style.display = 'flex';
   }
 
   bindEvents();
@@ -44,6 +56,11 @@ function bindEvents() {
 
   // Start button
   btnStart.addEventListener('click', startShopping);
+
+  // Cancel button
+  btnCancel.addEventListener('click', () => {
+    navigate('dashboard');
+  });
 }
 
 // ── Budget Input Handler ──────────────────────────────
@@ -95,6 +112,7 @@ function validateBudget(value) {
   return true;
 }
 
+// ── Set Hint ──────────────────────────────────────────
 function setHint(msg, type) {
   inputHint.textContent = msg;
   inputHint.className = 'input-hint' + (type ? ' ' + type : '');
@@ -108,8 +126,11 @@ function startShopping() {
   btnStart.innerHTML = `<span>Menyiapkan...</span>`;
   btnStart.disabled = true;
 
+  // Extract name (fallback to generated default in saveSession)
+  const nameVal = sessionName.value.trim();
+
   // Create and save new session
-  const session = createSession(selectedBudget);
+  const session = createSession(selectedBudget, nameVal);
   saveSession(session);
 
   // Short delay for UX feel, then navigate

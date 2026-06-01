@@ -22,7 +22,27 @@
           <circle cx="14" cy="16" r="2.5" fill="currentColor"/>
         </svg>
       </div>
-      <span>BudgetIn</span>
+      <div class="session-selector-wrap">
+        <button class="session-selector-btn" id="btnSwitchSession" title="Pindah Sesi Belanja">
+          <span id="currentSessionName">Memuat...</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="selector-arrow">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="session-dropdown" id="sessionDropdown" style="display:none">
+          <div class="dropdown-header">Sesi Belanja Aktif</div>
+          <div class="dropdown-list" id="dropdownSessionList">
+            <!-- Active sessions will be rendered by JS -->
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-action-btn" id="btnCreateNewSession">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Sesi Belanja Baru
+          </button>
+        </div>
+      </div>
     </div>
     <div class="nav-actions">
       <button class="nav-btn" id="btnHistory" title="Riwayat">

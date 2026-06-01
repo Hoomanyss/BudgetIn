@@ -31,6 +31,13 @@ const btnHistory       = document.getElementById('btnHistory');
 const btnReset         = document.getElementById('btnReset');
 const btnCheckout      = document.getElementById('btnCheckout');
 
+// Session Switcher Elements
+const elBtnSwitchSession     = document.getElementById('btnSwitchSession');
+const elCurrentSessionName   = document.getElementById('currentSessionName');
+const elSessionDropdown      = document.getElementById('sessionDropdown');
+const elDropdownSessionList  = document.getElementById('dropdownSessionList');
+const elBtnCreateNewSession  = document.getElementById('btnCreateNewSession');
+
 // Modal elements
 const editModal        = document.getElementById('editModal');
 const editItemIdInput  = document.getElementById('editItemId');
@@ -88,6 +95,15 @@ function bindEvents() {
       btn.classList.add('tab-btn--active');
       renderItemList();
     });
+  });
+
+  // Session selector events
+  elBtnSwitchSession.addEventListener('click', toggleSessionDropdown);
+  elBtnCreateNewSession.addEventListener('click', () => navigate('index?new=true'));
+  document.addEventListener('click', (e) => {
+    if (!elBtnSwitchSession.contains(e.target) && !elSessionDropdown.contains(e.target)) {
+      closeSessionDropdown();
+    }
   });
 
   // Navigation
@@ -193,6 +209,7 @@ function checkout() {
 
 // ── Render ────────────────────────────────────────────
 function renderAll() {
+  elCurrentSessionName.textContent = session.name || 'Sesi Belanja';
   renderBudgetOverview();
   renderItemList();
   renderCheckoutBar();
@@ -334,6 +351,56 @@ function renderCheckoutBar() {
 function persistAndRender() {
   saveSession(session);
   renderAll();
+}
+
+// ── Session Switcher Logics ───────────────────────────
+function toggleSessionDropdown(e) {
+  e.stopPropagation();
+  const isHidden = elSessionDropdown.style.display === 'none';
+  if (isHidden) {
+    renderSessionDropdown();
+    elSessionDropdown.style.display = 'flex';
+    elBtnSwitchSession.classList.add('active');
+  } else {
+    closeSessionDropdown();
+  }
+}
+
+function closeSessionDropdown() {
+  elSessionDropdown.style.display = 'none';
+  elBtnSwitchSession.classList.remove('active');
+}
+
+function renderSessionDropdown() {
+  const sessions = getActiveSessions();
+  const currentId = getCurrentSessionId();
+  elDropdownSessionList.innerHTML = '';
+
+  sessions.forEach(s => {
+    const item = document.createElement('button');
+    item.className = 'dropdown-item' + (s.id === currentId ? ' active' : '');
+    
+    const spent = calcTotalSpent(s.items);
+    const metaText = `${formatRupiah(spent)} / ${formatRupiah(s.budget)}`;
+
+    item.innerHTML = `
+      <div class="dropdown-item-left">
+        <div class="dropdown-item-name">${escapeHtml(s.name)}</div>
+        <div class="dropdown-item-meta">${metaText}</div>
+      </div>
+      <div class="dropdown-item-dot"></div>
+    `;
+
+    item.addEventListener('click', () => {
+      if (s.id !== currentId) {
+        setCurrentSessionId(s.id);
+        window.location.reload();
+      }
+      closeSessionDropdown();
+    });
+
+    elDropdownSessionList.appendChild(item);
+  });
 }
 
 // ── Helpers ───────────────────────────────────────────

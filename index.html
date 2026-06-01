@@ -51,6 +51,19 @@
 
       <h2 class="card-title">Berapa budget belanja kamu hari ini?</h2>
 
+      <!-- Session Name Input (Optional) -->
+      <div class="name-input-field">
+        <label for="sessionName" class="name-label">Nama Daftar Belanja (opsional)</label>
+        <input
+          type="text"
+          id="sessionName"
+          class="session-name-input"
+          placeholder="cth: Belanja Bulanan, Harian, Dapur"
+          maxlength="24"
+          autocomplete="off"
+        />
+      </div>
+
       <div class="input-group">
         <span class="currency-badge">Rp</span>
         <input
@@ -79,6 +92,11 @@
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M4 10h12M12 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+      </button>
+
+      <!-- Back button (displayed only when forcing a new session from dashboard) -->
+      <button class="btn-cancel" id="btnCancel" style="display:none">
+        Batal
       </button>
     </section>
 

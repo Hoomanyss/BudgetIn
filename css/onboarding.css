@@ -313,3 +313,60 @@
   }
 }
 
+/* ── Additional styling for Session Name Input & Cancel Button ── */
+.name-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.name-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-text-3);
+  padding-left: 2px;
+}
+
+.session-name-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--clr-surface-2);
+  border: 2px solid var(--clr-border-2);
+  border-radius: var(--r-md);
+  font-size: 0.95rem;
+  color: var(--clr-text);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.session-name-input:focus {
+  border-color: var(--clr-blue);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
+}
+
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--r-lg);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-2);
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--clr-text);
+  border-color: var(--clr-border-2);
+}
+
+

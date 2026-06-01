@@ -585,3 +585,196 @@ body {
   to   { transform: scale(1);   opacity: 1; }
 }
 
+/* ── Session Selector & Dropdown Styling ── */
+.session-selector-wrap {
+  position: relative;
+}
+
+.session-selector-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--r-md);
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.session-selector-btn:hover {
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.selector-arrow {
+  color: var(--clr-text-3);
+  transition: transform 0.25s ease;
+}
+
+.session-selector-btn:hover .selector-arrow {
+  color: var(--clr-accent);
+}
+
+.session-selector-btn.active .selector-arrow {
+  transform: rotate(180deg);
+  color: var(--clr-accent);
+}
+
+/* Dropdown Menu Box */
+.session-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 10px;
+  width: 290px;
+  background: rgba(19, 22, 31, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--clr-border-2);
+  border-radius: var(--r-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), var(--shadow-glow);
+  z-index: 100;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top left;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.dropdown-header {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-text-3);
+  padding: 4px 6px 2px;
+}
+
+.dropdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Custom Scrollbar for dropdown list */
+.dropdown-list::-webkit-scrollbar {
+  width: 4px;
+}
+.dropdown-list::-webkit-scrollbar-thumb {
+  background: var(--clr-border-2);
+  border-radius: var(--r-full);
+}
+
+/* Individual Session Option */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--clr-border);
+}
+
+.dropdown-item.active {
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.2);
+}
+
+.dropdown-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.dropdown-item-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--clr-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-item.active .dropdown-item-name {
+  color: var(--clr-text);
+}
+
+.dropdown-item-meta {
+  font-size: 0.72rem;
+  color: var(--clr-text-3);
+}
+
+.dropdown-item.active .dropdown-item-meta {
+  color: var(--clr-text-2);
+}
+
+.dropdown-item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--clr-text-3);
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.dropdown-item.active .dropdown-item-dot {
+  background: var(--clr-accent);
+  box-shadow: 0 0 6px var(--clr-accent);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--clr-border);
+  margin: 4px 0;
+}
+
+/* Action button inside dropdown */
+.dropdown-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: var(--r-md);
+  background: var(--clr-accent);
+  color: #0c0e13;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.dropdown-action-btn:hover {
+  background: var(--clr-accent-2);
+  transform: translateY(-1px);
+}
+
+
