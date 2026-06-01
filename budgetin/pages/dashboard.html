@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BudgetIn — Daftar Belanja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="topnav">
+    <div class="nav-brand">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+          <rect x="2" y="8" width="24" height="17" rx="3" fill="currentColor" opacity="0.2"/>
+          <rect x="2" y="8" width="24" height="17" rx="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 8V6a6 6 0 0 1 12 0v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="14" cy="16" r="2.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <span>BudgetIn</span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn" id="btnHistory" title="Riwayat">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 1C4.6 1 1 4.6 1 9s3.6 8 8 8 8-3.6 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M9 5v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 1l2 2-2 2M15 3H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="nav-btn nav-btn--danger" id="btnReset" title="Reset Sesi">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M3 9a6 6 0 1 0 1-3.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M1 4l2 2 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Budget Overview Bar -->
+  <section class="budget-overview" id="budgetOverview">
+    <div class="overview-left">
+      <div class="overview-label">Budget Awal</div>
+      <div class="overview-amount" id="totalBudget">Rp 0</div>
+    </div>
+    <div class="overview-divider"></div>
+    <div class="overview-center">
+      <div class="overview-label">Terpakai</div>
+      <div class="overview-amount overview-amount--spent" id="totalSpent">Rp 0</div>
+    </div>
+    <div class="overview-divider"></div>
+    <div class="overview-right">
+      <div class="overview-label">Sisa Dana</div>
+      <div class="overview-amount overview-amount--remaining" id="totalRemaining">Rp 0</div>
+    </div>
+  </section>
+
+  <!-- Budget Progress Bar -->
+  <div class="progress-wrapper">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-meta">
+      <span id="progressPercent">0% terpakai</span>
+      <span id="progressStatus" class="status-badge status--safe">Aman</span>
+    </div>
+  </div>
+
+  <!-- Add Item Form -->
+  <section class="add-item-section">
+    <div class="section-header">
+      <h2>Tambah Barang</h2>
+      <span class="item-count" id="itemCount">0 barang</span>
+    </div>
+
+    <div class="add-form" id="addForm">
+      <div class="form-row">
+        <div class="form-field form-field--wide">
+          <label>Nama Barang</label>
+          <input type="text" id="itemName" class="form-input" placeholder="cth: Susu UHT Full Cream" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <label>Prioritas</label>
+          <select id="itemPriority" class="form-input form-select">
+            <option value="wajib">⚡ Wajib</option>
+            <option value="keinginan">✨ Keinginan</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field form-field--wide">
+          <label>Estimasi Harga</label>
+          <div class="price-input-wrap">
+            <span class="price-prefix">Rp</span>
+            <input type="text" id="itemPrice" class="form-input price-input" placeholder="0" inputmode="numeric" autocomplete="off" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Qty</label>
+          <div class="qty-control">
+            <button class="qty-btn" id="qtyMinus">−</button>
+            <input type="number" id="itemQty" class="form-input qty-input" value="1" min="1" max="99" />
+            <button class="qty-btn" id="qtyPlus">+</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-add" id="btnAddItem">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Tambah ke Daftar
+      </button>
+    </div>
+  </section>
+
+  <!-- Shopping List -->
+  <section class="list-section">
+    <div class="list-tabs">
+      <button class="tab-btn tab-btn--active" data-filter="all">Semua</button>
+      <button class="tab-btn" data-filter="wajib">⚡ Wajib</button>
+      <button class="tab-btn" data-filter="keinginan">✨ Keinginan</button>
+      <button class="tab-btn" data-filter="checked">✓ Sudah Beli</button>
+    </div>
+
+    <div class="item-list" id="itemList">
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🛒</div>
+        <p>Daftar belanjamu masih kosong.<br/>Tambahkan barang pertamamu!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Checkout Button -->
+  <div class="checkout-bar" id="checkoutBar" style="display:none">
+    <div class="checkout-summary">
+      <span>Total checklist:</span>
+      <strong id="checkoutTotal">Rp 0</strong>
+    </div>
+    <button class="btn-checkout" id="btnCheckout">
+      Selesaikan Belanja
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Edit Price Modal -->
+  <div class="modal-overlay" id="editModal" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Ubah Harga Riil</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <p class="modal-desc">Update harga sesuai label di rak toko untuk akurasi lebih baik.</p>
+      <input type="hidden" id="editItemId" />
+      <div class="price-input-wrap">
+        <span class="price-prefix">Rp</span>
+        <input type="text" id="editPriceInput" class="form-input price-input" placeholder="0" inputmode="numeric" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="modalCancel">Batal</button>
+        <button class="btn-primary" id="modalSave">Simpan Harga</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

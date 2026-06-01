@@ -1,0 +1,281 @@
+/* ===================================================
+   history.css — BudgetIn Shopping History Page
+   =================================================== */
+
+.history-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-lg) 60px;
+}
+
+/* ── Stats Row ── */
+.history-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: var(--space-xl);
+  animation: fadeUp 0.4s ease both;
+}
+.hstat-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+  padding: var(--space-sm) 6px;
+  text-align: center;
+}
+.hstat-num {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clr-accent);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hstat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-text-3);
+}
+
+/* ── Session List ── */
+.session-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.session-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-xl);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  animation: fadeUp 0.4s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.session-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 4px 0 0 4px;
+}
+.session-card.session--safe::before   { background: var(--clr-accent); }
+.session-card.session--over::before   { background: var(--clr-danger); }
+
+.session-card:hover {
+  border-color: var(--clr-border-2);
+  transform: translateX(4px);
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.session-date {
+  font-size: 0.75rem;
+  color: var(--clr-text-3);
+  font-weight: 500;
+}
+.session-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+}
+.session-badge--safe {
+  background: rgba(74,222,128,0.12);
+  color: var(--clr-accent);
+}
+.session-badge--over {
+  background: rgba(248,113,113,0.12);
+  color: var(--clr-danger);
+}
+
+.session-amounts {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+.sa-spent {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--clr-text);
+  letter-spacing: -0.03em;
+}
+.sa-of {
+  font-size: 0.78rem;
+  color: var(--clr-text-3);
+  margin-bottom: 4px;
+}
+
+.session-progress {
+  height: 4px;
+  background: var(--clr-surface-2);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+.session-progress-fill {
+  height: 100%;
+  border-radius: var(--r-full);
+  background: var(--clr-accent);
+}
+.session-progress-fill.over { background: var(--clr-danger); }
+
+.session-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--clr-border);
+}
+.session-items-count {
+  font-size: 0.78rem;
+  color: var(--clr-text-3);
+}
+.session-saving {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--clr-accent);
+}
+.session-saving.over {
+  color: var(--clr-danger);
+}
+
+/* ── Drawer ── */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.drawer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border-2);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: var(--space-md) var(--space-lg) 40px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: modalUp 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes modalUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.drawer-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--clr-border-2);
+  border-radius: var(--r-full);
+  margin: 0 auto -4px;
+}
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-sm);
+}
+.drawer-header h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.drawer-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--clr-surface-2);
+  color: var(--clr-text-3);
+  font-size: 0.75rem;
+  transition: all 0.2s;
+}
+.drawer-close:hover {
+  color: var(--clr-text);
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.drawer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--clr-surface-2);
+  border-radius: var(--r-md);
+  font-size: 0.875rem;
+}
+.drawer-item span:last-child {
+  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+}
+
+.drawer-footer {
+  border-top: 1px solid var(--clr-border);
+  padding-top: var(--space-md);
+}
+.btn-delete-session {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(248,113,113,0.3);
+  border-radius: var(--r-md);
+  color: var(--clr-danger);
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: rgba(248,113,113,0.06);
+  transition: all 0.2s;
+}
+.btn-delete-session:hover {
+  background: rgba(248,113,113,0.12);
+}
+
+/* ── Go Shop Button ── */
+.btn-go-shop {
+  margin-top: 4px;
+  padding: 11px 24px;
+  background: var(--clr-accent);
+  color: #0c0e13;
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.btn-go-shop:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BudgetIn — Ringkasan Belanja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/settlement.css" />
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <main class="settlement-container">
+
+    <!-- Result Hero -->
+    <section class="result-hero" id="resultHero">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+      <h1 class="result-title" id="resultTitle">Belanja Selesai!</h1>
+      <p class="result-sub" id="resultSub">Kamu berhasil belanja dalam batas anggaran.</p>
+    </section>
+
+    <!-- Summary Cards -->
+    <section class="summary-grid">
+      <div class="summary-card summary-card--budget">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <rect x="1" y="5" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M5 5V4a4 4 0 0 1 8 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="sc-label">Budget Awal</div>
+        <div class="sc-value" id="sc-budget">Rp 0</div>
+      </div>
+
+      <div class="summary-card summary-card--spent">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 1v16M1 9h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+            <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="sc-label">Total Dibelanjakan</div>
+        <div class="sc-value" id="sc-spent">Rp 0</div>
+      </div>
+
+      <div class="summary-card summary-card--saving">
+        <div class="sc-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M5 9l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="sc-label" id="sc-saving-label">Penghematan</div>
+        <div class="sc-value" id="sc-saving">Rp 0</div>
+      </div>
+    </section>
+
+    <!-- Breakdown Table -->
+    <section class="breakdown-section">
+      <div class="breakdown-header">
+        <h2>Rincian Pembelian</h2>
+        <span class="item-badge" id="boughtCount">0 item</span>
+      </div>
+      <div class="breakdown-list" id="breakdownList">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- Skipped Items (if any) -->
+    <section class="skipped-section" id="skippedSection" style="display:none">
+      <div class="breakdown-header">
+        <h2>Tidak Dibeli</h2>
+        <span class="item-badge item-badge--muted" id="skippedCount">0 item</span>
+      </div>
+      <div class="breakdown-list" id="skippedList">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="action-group">
+      <button class="btn-save-history" id="btnSaveHistory">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 2h8l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M11 2v4H5V2" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M4 10h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M4 13h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Simpan ke Riwayat
+      </button>
+      <button class="btn-new-session" id="btnNewSession">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8a6 6 0 1 0 1-3.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M1 3l1 2 2-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Sesi Belanja Baru
+      </button>
+    </div>
+
+    <!-- History hint toast -->
+    <div class="toast" id="saveToast" style="display:none">
+      ✓ Riwayat berhasil disimpan!
+    </div>
+
+  </main>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/settlement.js"></script>
+</body>
+</html>

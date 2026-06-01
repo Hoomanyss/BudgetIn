@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BudgetIn — Riwayat Belanja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/history.css" />
+</head>
+<body>
+
+  <nav class="topnav">
+    <button class="back-btn" id="btnBack">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M11 4L5 9l6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Kembali
+    </button>
+    <div class="nav-brand">
+      <span>Riwayat Belanja</span>
+    </div>
+    <button class="nav-btn nav-btn--danger" id="btnClearAll" title="Hapus Semua">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M2 4h12M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1M13 4l-1 9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1L3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </nav>
+
+  <main class="history-container">
+
+    <!-- Stats Overview -->
+    <section class="history-stats" id="historyStats" style="display:none">
+      <div class="hstat-card">
+        <div class="hstat-num" id="totalSessions">0</div>
+        <div class="hstat-label">Sesi Belanja</div>
+      </div>
+      <div class="hstat-card">
+        <div class="hstat-num" id="totalAllSpent">Rp 0</div>
+        <div class="hstat-label">Total Dibelanjakan</div>
+      </div>
+      <div class="hstat-card">
+        <div class="hstat-num" id="totalAllSaving">Rp 0</div>
+        <div class="hstat-label">Total Hemat</div>
+      </div>
+    </section>
+
+    <!-- Session List -->
+    <div class="session-list" id="sessionList">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyHistory" style="display:none">
+      <div class="empty-icon">📋</div>
+      <h3>Belum ada riwayat</h3>
+      <p>Selesaikan sesi belanja dan simpan untuk melihat riwayatmu di sini.</p>
+      <button class="btn-go-shop" id="btnGoShop">Mulai Belanja</button>
+    </div>
+
+  </main>
+
+  <!-- Detail Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" style="display:none">
+    <div class="drawer" id="drawer">
+      <div class="drawer-handle"></div>
+      <div class="drawer-header">
+        <h3 id="drawerTitle">Detail Sesi</h3>
+        <button class="drawer-close" id="drawerClose">✕</button>
+      </div>
+      <div class="drawer-content" id="drawerContent">
+        <!-- populated by JS -->
+      </div>
+      <div class="drawer-footer">
+        <button class="btn-delete-session" id="btnDeleteSession">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M1.5 3.5h11M4.5 3.5V2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1M11.5 3.5l-.8 8a.5.5 0 0 1-.5.5H3.8a.5.5 0 0 1-.5-.5l-.8-8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Hapus Sesi Ini
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/history.js"></script>
+</body>
+</html>

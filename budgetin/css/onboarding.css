@@ -1,0 +1,267 @@
+/* ===================================================
+   onboarding.css — BudgetIn Onboarding / Landing Page
+   =================================================== */
+
+.onboarding-container {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  min-height: 100vh;
+  justify-content: center;
+}
+
+/* ── Brand Header ── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--clr-text);
+}
+
+/* ── Hero ── */
+.hero {
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+  margin-bottom: var(--space-sm);
+}
+.hero-tag::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: var(--clr-accent);
+  border-radius: 2px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 6.5vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--clr-text);
+  margin-bottom: var(--space-sm);
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--clr-accent), var(--clr-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: 0.92rem;
+  color: var(--clr-text-2);
+  line-height: 1.5;
+  max-width: 380px;
+  font-weight: 300;
+}
+
+/* ── Budget Input Card ── */
+.budget-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-xl);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeUp 0.5s ease 0.35s both;
+  position: relative;
+  overflow: hidden;
+}
+.budget-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(74,222,128,0.4), transparent);
+}
+
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-text-3);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--clr-text);
+  line-height: 1.3;
+}
+
+/* ── Budget Input ── */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: var(--clr-surface-2);
+  border: 2px solid var(--clr-border-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.input-group:focus-within {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 4px rgba(74,222,128,0.1);
+}
+
+.currency-badge {
+  padding: 0 16px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--clr-accent);
+  border-right: 1px solid var(--clr-border-2);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.budget-input {
+  flex: 1;
+  padding: 14px 16px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--clr-text);
+  letter-spacing: -0.02em;
+  background: transparent;
+  min-width: 0;
+}
+.budget-input::placeholder {
+  color: var(--clr-text-3);
+}
+
+/* ── Quick Amount Buttons ── */
+.quick-amounts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.qa-label {
+  font-size: 0.8rem;
+  color: var(--clr-text-3);
+  white-space: nowrap;
+}
+.qa-btn {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--r-full);
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-2);
+  transition: all 0.2s;
+}
+.qa-btn:hover,
+.qa-btn.active {
+  background: rgba(74,222,128,0.12);
+  border-color: rgba(74,222,128,0.4);
+  color: var(--clr-accent);
+}
+
+/* ── Input Hint ── */
+.input-hint {
+  font-size: 0.8rem;
+  color: var(--clr-text-3);
+  min-height: 20px;
+}
+.input-hint.valid {
+  color: var(--clr-accent);
+}
+.input-hint.error {
+  color: var(--clr-danger);
+}
+
+/* ── Start Button ── */
+.btn-start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--r-lg);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  background: var(--clr-accent);
+  color: #0c0e13;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-start::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.btn-start:hover:not(:disabled)::after {
+  opacity: 1;
+}
+.btn-start:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(74,222,128,0.35);
+}
+.btn-start:disabled {
+  background: var(--clr-surface-2);
+  color: var(--clr-text-3);
+  cursor: not-allowed;
+  border: 1px solid var(--clr-border);
+}
+.btn-start:disabled svg {
+  opacity: 0.4;
+}
+
+/* ── Feature Pills ── */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  animation: fadeUp 0.5s ease 0.5s both;
+}
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--clr-text-3);
+  padding: 6px 12px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface);
+}
