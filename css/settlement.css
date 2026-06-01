@@ -225,3 +225,68 @@
 .result-hero.overbudget .result-title {
   color: var(--clr-danger);
 }
+
+/* ── Responsive adjustments for Web/Desktop (min-width: 768px) ── */
+@media (min-width: 768px) {
+  .settlement-container {
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-lg);
+    align-items: start;
+    padding: var(--space-xl) var(--space-md) var(--space-xl);
+  }
+
+  .result-hero {
+    grid-column: 1 / -1;
+    margin-bottom: var(--space-md);
+  }
+
+  .summary-grid {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .summary-card {
+    padding: 16px 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .summary-card .sc-icon {
+    order: 1;
+  }
+  
+  .summary-card .sc-label {
+    order: 2;
+    flex: 1;
+    font-size: 0.75rem;
+  }
+
+  .summary-card .sc-value {
+    order: 3;
+    font-size: 1.1rem;
+    text-align: right;
+  }
+
+  .action-group {
+    grid-column: 1;
+    margin-top: 10px;
+  }
+
+  .breakdown-section {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .skipped-section {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: var(--space-md);
+  }
+}
+

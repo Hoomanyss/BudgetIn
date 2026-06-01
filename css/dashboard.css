@@ -513,3 +513,75 @@ body {
   gap: 10px;
 }
 .modal-actions button { flex: 1; }
+
+/* ── Responsive adjustments for Web/Desktop (min-width: 992px) ── */
+@media (min-width: 992px) {
+  .dashboard-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  .budget-overview {
+    margin-top: var(--space-lg);
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    border: 1px solid var(--clr-border);
+    border-bottom: none;
+    padding: 24px 30px;
+  }
+
+  .progress-wrapper {
+    border-radius: 0 0 var(--r-xl) var(--r-xl);
+    border: 1px solid var(--clr-border);
+    border-top: none;
+    margin-bottom: var(--space-xl);
+    padding: 14px 30px 20px;
+  }
+
+  .dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .add-item-section {
+    padding: 0;
+  }
+
+  .list-section {
+    padding: 0;
+  }
+
+  .checkout-bar {
+    max-width: 1040px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    border: 1px solid var(--clr-border);
+    border-bottom: none;
+    padding: 16px 30px;
+  }
+}
+
+/* ── Responsive modal dialog (min-width: 768px) ── */
+@media (min-width: 768px) {
+  .modal-overlay {
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+  }
+
+  .modal {
+    border-radius: var(--r-xl);
+    transform: translateY(0);
+    box-shadow: var(--shadow-md), 0 20px 40px rgba(0,0,0,0.5);
+    animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes modalScaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+

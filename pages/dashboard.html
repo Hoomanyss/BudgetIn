@@ -41,99 +41,103 @@
     </div>
   </nav>
 
-  <!-- Budget Overview Bar -->
-  <section class="budget-overview" id="budgetOverview">
-    <div class="overview-left">
-      <div class="overview-label">Budget Awal</div>
-      <div class="overview-amount" id="totalBudget">Rp 0</div>
-    </div>
-    <div class="overview-divider"></div>
-    <div class="overview-center">
-      <div class="overview-label">Terpakai</div>
-      <div class="overview-amount overview-amount--spent" id="totalSpent">Rp 0</div>
-    </div>
-    <div class="overview-divider"></div>
-    <div class="overview-right">
-      <div class="overview-label">Sisa Dana</div>
-      <div class="overview-amount overview-amount--remaining" id="totalRemaining">Rp 0</div>
-    </div>
-  </section>
-
-  <!-- Budget Progress Bar -->
-  <div class="progress-wrapper">
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <div class="progress-meta">
-      <span id="progressPercent">0% terpakai</span>
-      <span id="progressStatus" class="status-badge status--safe">Aman</span>
-    </div>
-  </div>
-
-  <!-- Add Item Form -->
-  <section class="add-item-section">
-    <div class="section-header">
-      <h2>Tambah Barang</h2>
-      <span class="item-count" id="itemCount">0 barang</span>
-    </div>
-
-    <div class="add-form" id="addForm">
-      <div class="form-row">
-        <div class="form-field form-field--wide">
-          <label>Nama Barang</label>
-          <input type="text" id="itemName" class="form-input" placeholder="cth: Susu UHT Full Cream" autocomplete="off" />
-        </div>
-        <div class="form-field">
-          <label>Prioritas</label>
-          <select id="itemPriority" class="form-input form-select">
-            <option value="wajib">⚡ Wajib</option>
-            <option value="keinginan">✨ Keinginan</option>
-          </select>
-        </div>
+  <main class="dashboard-container">
+    <!-- Budget Overview Bar -->
+    <section class="budget-overview" id="budgetOverview">
+      <div class="overview-left">
+        <div class="overview-label">Budget Awal</div>
+        <div class="overview-amount" id="totalBudget">Rp 0</div>
       </div>
-      <div class="form-row">
-        <div class="form-field form-field--wide">
-          <label>Estimasi Harga</label>
-          <div class="price-input-wrap">
-            <span class="price-prefix">Rp</span>
-            <input type="text" id="itemPrice" class="form-input price-input" placeholder="0" inputmode="numeric" autocomplete="off" />
+      <div class="overview-divider"></div>
+      <div class="overview-center">
+        <div class="overview-label">Terpakai</div>
+        <div class="overview-amount overview-amount--spent" id="totalSpent">Rp 0</div>
+      </div>
+      <div class="overview-divider"></div>
+      <div class="overview-right">
+        <div class="overview-label">Sisa Dana</div>
+        <div class="overview-amount overview-amount--remaining" id="totalRemaining">Rp 0</div>
+      </div>
+    </section>
+
+    <!-- Budget Progress Bar -->
+    <div class="progress-wrapper">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-meta">
+        <span id="progressPercent">0% terpakai</span>
+        <span id="progressStatus" class="status-badge status--safe">Aman</span>
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <!-- Add Item Form -->
+      <section class="add-item-section">
+        <div class="section-header">
+          <h2>Tambah Barang</h2>
+          <span class="item-count" id="itemCount">0 barang</span>
+        </div>
+
+        <div class="add-form" id="addForm">
+          <div class="form-row">
+            <div class="form-field form-field--wide">
+              <label>Nama Barang</label>
+              <input type="text" id="itemName" class="form-input" placeholder="cth: Susu UHT Full Cream" autocomplete="off" />
+            </div>
+            <div class="form-field">
+              <label>Prioritas</label>
+              <select id="itemPriority" class="form-input form-select">
+                <option value="wajib">⚡ Wajib</option>
+                <option value="keinginan">✨ Keinginan</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field form-field--wide">
+              <label>Estimasi Harga</label>
+              <div class="price-input-wrap">
+                <span class="price-prefix">Rp</span>
+                <input type="text" id="itemPrice" class="form-input price-input" placeholder="0" inputmode="numeric" autocomplete="off" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Qty</label>
+              <div class="qty-control">
+                <button class="qty-btn" id="qtyMinus">−</button>
+                <input type="number" id="itemQty" class="form-input qty-input" value="1" min="1" max="99" />
+                <button class="qty-btn" id="qtyPlus">+</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn-add" id="btnAddItem">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Tambah ke Daftar
+          </button>
+        </div>
+      </section>
+
+      <!-- Shopping List -->
+      <section class="list-section">
+        <div class="list-tabs">
+          <button class="tab-btn tab-btn--active" data-filter="all">Semua</button>
+          <button class="tab-btn" data-filter="wajib">⚡ Wajib</button>
+          <button class="tab-btn" data-filter="keinginan">✨ Keinginan</button>
+          <button class="tab-btn" data-filter="checked">✓ Sudah Beli</button>
+        </div>
+
+        <div class="item-list" id="itemList">
+          <!-- Empty state -->
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🛒</div>
+            <p>Daftar belanjamu masih kosong.<br/>Tambahkan barang pertamamu!</p>
           </div>
         </div>
-        <div class="form-field">
-          <label>Qty</label>
-          <div class="qty-control">
-            <button class="qty-btn" id="qtyMinus">−</button>
-            <input type="number" id="itemQty" class="form-input qty-input" value="1" min="1" max="99" />
-            <button class="qty-btn" id="qtyPlus">+</button>
-          </div>
-        </div>
-      </div>
-      <button class="btn-add" id="btnAddItem">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        Tambah ke Daftar
-      </button>
+      </section>
     </div>
-  </section>
-
-  <!-- Shopping List -->
-  <section class="list-section">
-    <div class="list-tabs">
-      <button class="tab-btn tab-btn--active" data-filter="all">Semua</button>
-      <button class="tab-btn" data-filter="wajib">⚡ Wajib</button>
-      <button class="tab-btn" data-filter="keinginan">✨ Keinginan</button>
-      <button class="tab-btn" data-filter="checked">✓ Sudah Beli</button>
-    </div>
-
-    <div class="item-list" id="itemList">
-      <!-- Empty state -->
-      <div class="empty-state" id="emptyState">
-        <div class="empty-icon">🛒</div>
-        <p>Daftar belanjamu masih kosong.<br/>Tambahkan barang pertamamu!</p>
-      </div>
-    </div>
-  </section>
+  </main>
 
   <!-- Floating Checkout Button -->
   <div class="checkout-bar" id="checkoutBar" style="display:none">
